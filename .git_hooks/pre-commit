@@ -63,8 +63,12 @@ echo "minos 3 ${git_root}"
 if [ -f "${git_root}/../../../build/compile_commands.json" ];then
   `cp -a "${git_root}/../../../build/compile_commands.json" ${git_root}`
 else
-  echo "compile_commands.json not exit, please make the project"
-  exit 1
+	if [ -f "${git_root}/../../build/compile_commands.json" ];then
+		`cp -a "${git_root}/../../build/compile_commands.json" ${git_root}`
+	else
+		echo "compile_commands.json not exit, please make the project"
+		exit 1
+	fi
 fi
 
 array_name=()
