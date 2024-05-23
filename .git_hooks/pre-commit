@@ -51,10 +51,10 @@ else
 fi
 
 # 2、check clang-tidy exists
-if [ -x "$(command -v clang-tidy)" ]; then
+if [ -x "$(command -v clang-tidy-15)" ]; then
   tidy_cmd='./clang-tidy'
 else
-  echo -e "${red} Error: clang-tidy is not installed.we need clang-tidy-10${no_color}"
+  echo -e "${red} Error: clang-tidy is not installed.we need clang-tidy-15${no_color}"
   exit 1
 fi
 

@@ -311,7 +311,7 @@ def main():
         # Find our database
         build_path = os.getcwd()
 
-    clang_tidy_binary = find_binary(args.clang_tidy_binary, "clang-tidy", build_path)
+    clang_tidy_binary = find_binary(args.clang_tidy_binary, "clang-tidy-15", build_path)
 #    clang_tidy_binary = './clang-tidy'
     tmpdir = None
 
