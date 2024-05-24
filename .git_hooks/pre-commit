@@ -80,8 +80,9 @@ for file in ${FILES}; do
     array_name+=${file}
     array_name+=","
 done
-extra_arg="-I/home/wangqing/work_space/tools/llvm-project/build/lib/clang/15.0.0/include"
-RES=`$python_cmd $tidy_lint -commit-files=${array_name} -p ${git_root} -extra-arg-before=${extra_arg}`
+extra_arg1="-I/lib/clang/15/include"
+extra_arg2="-I/lib/clang/10/include"
+RES=`$python_cmd $tidy_lint -commit-files=${array_name} -p ${git_root} -extra-arg-before=${extra_arg1} -extra-arg-before=${extra_arg2}`
 
 echo -e "${warning}---------------clang-tidy result --------------"
 echo -e "clang-tidy check res= ${RES}"
