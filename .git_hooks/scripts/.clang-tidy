@@ -1,6 +1,6 @@
 ---
 WarningsAsErrors: '*'
-Checks:          'readability-redundant-control-flow,readability-implicit-bool-conversion,cppcoreguidelines-init-variables,modernize-deprecated-headers,readability-braces-around-statements,readability-container-size-empty,readability-delete-null-pointer,bugprone-forward-declaration-namespace,performance-faster-string-find,readability-inconsistent-declaration-parameter-name,readability-misleading-indentation,readability-const-return-type,clang-diagnostic-unused-parameter,bugprone-exception-escape,performance-inefficient-string-algorithm,performance-inefficient-string-concatenation,-clang-analyzer-core.UndefinedBinaryOperatorResult'
+Checks:          'readability-redundant-control-flow,readability-implicit-bool-conversion,cppcoreguidelines-init-variables,modernize-deprecated-headers,readability-braces-around-statements,readability-container-size-empty,readability-delete-null-pointer,bugprone-forward-declaration-namespace,performance-faster-string-find,readability-inconsistent-declaration-parameter-name,readability-misleading-indentation,readability-const-return-type,clang-diagnostic-unused-parameter,bugprone-exception-escape,performance-inefficient-string-algorithm,performance-inefficient-string-concatenation,google-*,-clang-analyzer-core.UndefinedBinaryOperatorResult'
 HeaderFilterRegex: ''
 
 AnalyzeTemporaryDtors: false
