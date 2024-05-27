@@ -13,7 +13,7 @@ tip_bg='\033[43m'
 no_color='\033[0m'
 
 echo -e "${green_bg}-------------------Start Static Code Check------------------  ${no_color}"
-echo "minos ${git_root}"
+
 # 0、clone/clang_tidy_check.git
 if [ ! -d "$git_root/clang_tidy_check" ]; then
   echo -e "${title}1、---------------Repo:clang_tidy_check not exist, start clone --------------${no_color}"
@@ -33,7 +33,7 @@ else
     exit 1
   fi
 fi
-echo "minos 2"
+
 # 1、update .git_hooks
 echo -e "${title}2、---------------start update .git_hooks --------------${no_color}"
 cp -a clang_tidy_check/.git_hooks .
@@ -59,8 +59,6 @@ else
   exit 1
 fi
 
-echo "minos 3 ${git_root}"
-
 if [ -f "${git_root}/../../../build/compile_commands.json" ];then
   `cp -a "${git_root}/../../../build/compile_commands.json" ${git_root}`
 else
@@ -72,9 +70,17 @@ else
 	fi
 fi
 
+package_name="${git_root##*/}"
+if grep -q "$package_name" "./compile_commands.json"; then
+  echo "ok"
+else
+  echo "./compile_commands.json is not correct"
+  exit 1
+fi
+
 array_name=()
 FILES=`git diff --staged --name-only --diff-filter=AMC | grep -v third_party | grep -E ".cpp$|.h$|.c$|.cc$"`
-echo "minos 4 ${FILES}"
+
 for file in ${FILES}; do
     echo ${file}
     array_name+=${file}
