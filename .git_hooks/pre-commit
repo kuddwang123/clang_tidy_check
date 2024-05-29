@@ -48,6 +48,8 @@ if [ -x "$(command -v python3)" ]; then
   python_cmd='python3'
 else
   echo -e "${warning}Warning: python3 is not installed${no_color}"
+  rm -rf ./.git_hooks
+  rm -rf  ${tidy_config}
   exit 1
 fi
 
@@ -56,6 +58,8 @@ if [ -x "$(command -v clang-tidy-15)" ]; then
   tidy_cmd='./clang-tidy'
 else
   echo -e "${red} Error: clang-tidy is not installed.we need clang-tidy-15${no_color}"
+  rm -rf ./.git_hooks
+  rm -rf  ${tidy_config}
   exit 1
 fi
 
@@ -66,6 +70,8 @@ else
 		`cp -a "${git_root}/../../build/compile_commands.json" ${git_root}`
 	else
 		echo "compile_commands.json not exit, please make the project"
+		rm -rf ./.git_hooks
+		rm -rf  ${tidy_config}
 		exit 1
 	fi
 fi
@@ -75,6 +81,8 @@ if grep -q "$package_name" "./compile_commands.json"; then
   echo "ok"
 else
   echo "./compile_commands.json is not correct, make your package again"
+  rm -rf ./.git_hooks
+  rm -rf  ${tidy_config}
   exit 1
 fi
 
@@ -92,6 +100,8 @@ RES=`$python_cmd $tidy_lint -commit-files=${array_name} -p ${git_root}`
 echo -e "${warning}---------------clang-tidy result --------------"
 echo -e "clang-tidy check res= ${RES}"
 echo -e "----------------clang-tidy check end --------------${no_color}"
+rm -rf ./.git_hooks
+rm -rf  ${tidy_config}
 exit ${RES}
 
 
