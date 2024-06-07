@@ -18,9 +18,9 @@ echo -e "${green_bg}-------------------Start Static Code Check------------------
 if [ ! -d "$git_root/clang_tidy_check" ]; then
   echo -e "${title}1、---------------Repo:clang_tidy_check not exist, start clone --------------${no_color}"
   unset GIT_WORK_TREE
-  git clone -b main git@github.com:kuddwang123/clang_tidy_check.git
+  git clone -b main https://github.com/kuddwang123/clang_tidy_check.git
   if [ "$?" -ne "0" ]; then
-    echo -e "${red}(ssh)git@github.com:kuddwang123/clang_tidy_check.git !!!${no_color}"
+    echo -e "${red}(https)https://github.com/kuddwang123/clang_tidy_check.git !!!${no_color}"
     exit 1
   fi
 else
