@@ -39,8 +39,6 @@ echo -e "${title}2、---------------start update .git_hooks --------------${no_c
 cp -a clang_tidy_check/.git_hooks .
 echo ""
 cp ${tidy_config} .
-cp -a ${git_root}/.git_hooks/pre-commit ./.git/hooks/pre-commit
-rm -rf clang_tidy_check
 echo -e "${title}2、---------------end update .git_hooks --------------${no_color}"
 
 # 1、check python version,if 3 not exist, use 2
@@ -102,6 +100,8 @@ echo -e "clang-tidy check res= ${RES}"
 echo -e "----------------clang-tidy check end --------------${no_color}"
 rm -rf ./.git_hooks
 rm -rf  ./.clang-tidy
+cp -a ${git_root}/.git_hooks/pre-commit ./.git/hooks/pre-commit
+rm -rf clang_tidy_check
 exit ${RES}
 
 
