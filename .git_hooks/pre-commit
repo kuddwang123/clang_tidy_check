@@ -102,7 +102,6 @@ cp -a ${git_root}/.git_hooks/pre-commit ./.git/hooks/pre-commit
 rm -rf ./.git_hooks
 rm -rf  ./.clang-tidy
 rm -rf clang_tidy_check
-echo "all end"
 exit ${RES}
 
 
