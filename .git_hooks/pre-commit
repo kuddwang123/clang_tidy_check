@@ -98,9 +98,9 @@ RES=`$python_cmd $tidy_lint -commit-files=${array_name} -p ${git_root}`
 echo -e "${warning}---------------clang-tidy result --------------"
 echo -e "clang-tidy check res= ${RES}"
 echo -e "----------------clang-tidy check end --------------${no_color}"
+cp -a ${git_root}/.git_hooks/pre-commit ./.git/hooks/pre-commit
 rm -rf ./.git_hooks
 rm -rf  ./.clang-tidy
-cp -a ${git_root}/.git_hooks/pre-commit ./.git/hooks/pre-commit
 rm -rf clang_tidy_check
 echo "all end"
 exit ${RES}
