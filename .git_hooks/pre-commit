@@ -12,15 +12,21 @@ message_bg='\033[44m'
 tip_bg='\033[43m'
 no_color='\033[0m'
 
+exit_callback(){
+  rm -rf ./.git_hooks
+  rm -rf  ./.clang-tidy
+  exit 1
+}
+
 echo -e "${green_bg}-------------------Start Static Code Check------------------  ${no_color}"
 
 # 0、clone/clang_tidy_check.git
 if [ ! -d "$git_root/clang_tidy_check" ]; then
   echo -e "${title}1、---------------Repo:clang_tidy_check not exist, start clone --------------${no_color}"
   unset GIT_WORK_TREE
-  git clone -b main https://github.com/kuddwang123/clang_tidy_check.git
+  git clone -b main http://192.168.140.233/wangqing/clang_tidy_check.git
   if [ "$?" -ne "0" ]; then
-    echo -e "${red}(https)https://github.com/kuddwang123/clang_tidy_check.git !!!${no_color}"
+    echo -e "${red}(https)http://192.168.140.233/wangqing/clang_tidy_check.git!!!${no_color}"
     exit 1
   fi
 else
@@ -29,7 +35,7 @@ else
   git pull
   cd $git_root
   if [ "$?" -ne "0" ]; then
-    echo -e "${red} update kuddwang123/clang_tidy_check.git faild !!!${no_color}"
+    echo -e "${red} update http://192.168.140.233/wangqing/clang_tidy_check.git faild !!!${no_color}"
     exit 1
   fi
 fi
@@ -39,6 +45,7 @@ echo -e "${title}2、---------------start update .git_hooks --------------${no_c
 cp -a clang_tidy_check/.git_hooks .
 echo ""
 cp ${tidy_config} .
+rm -rf clang_tidy_check
 echo -e "${title}2、---------------end update .git_hooks --------------${no_color}"
 
 # 1、check python version,if 3 not exist, use 2
@@ -46,19 +53,15 @@ if [ -x "$(command -v python3)" ]; then
   python_cmd='python3'
 else
   echo -e "${warning}Warning: python3 is not installed${no_color}"
-  rm -rf ./.git_hooks
-  rm -rf  ./.clang-tidy
-  exit 1
+  exit_callback
 fi
 
 # 2、check clang-tidy exists
 if [ -x "$(command -v clang-tidy-15)" ]; then
-  tidy_cmd='./clang-tidy'
+  tidy_cmd='./clang-tidy-15'
 else
   echo -e "${red} Error: clang-tidy is not installed.we need clang-tidy-15${no_color}"
-  rm -rf ./.git_hooks
-  rm -rf  ./.clang-tidy
-  exit 1
+  exit_callback
 fi
 
 if [ -f "${git_root}/../../../build/compile_commands.json" ];then
@@ -68,9 +71,7 @@ else
 		`cp -a "${git_root}/../../build/compile_commands.json" ${git_root}`
 	else
 		echo "compile_commands.json not exit, please make the project"
-		rm -rf ./.git_hooks
-		rm -rf  ./.clang-tidy
-		exit 1
+		exit_callback
 	fi
 fi
 
@@ -79,9 +80,7 @@ if grep -q "$package_name" "./compile_commands.json"; then
   echo "ok"
 else
   echo "./compile_commands.json is not correct, make your package again"
-  rm -rf ./.git_hooks
-  rm -rf ./.clang-tidy
-  exit 1
+  exit_callback
 fi
 
 array_name=()
@@ -101,7 +100,7 @@ echo -e "----------------clang-tidy check end --------------${no_color}"
 cp -a ${git_root}/.git_hooks/pre-commit ./.git/hooks/pre-commit
 rm -rf ./.git_hooks
 rm -rf  ./.clang-tidy
-rm -rf clang_tidy_check
+
 exit ${RES}
 
 
